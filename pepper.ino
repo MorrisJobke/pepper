@@ -48,7 +48,7 @@ void onConnectionEstablished() {
 
     matrix->fillScreen(0);
     matrix->setCursor(9, 6);
-    matrix->print(text);
+    matrix->print(utf8ascii(text));
     drawLogo(logo_index);
 
     matrix->show();
@@ -107,4 +107,46 @@ void drawLogo(unsigned int logo_index) {
   }
 
   matrix->show();
+}
+
+
+// utf8ascii convertion from https://github.com/awtrix/AWTRIX2.0-Controller/blob/098a8bd10156b1085122944500b31f2e7a0afe27/src/AWTRIXController.cpp#L48-L86
+static byte c1;  // Last character buffer
+byte utf8ascii(byte ascii) {
+  if ( ascii < 128 ) // Standard ASCII-set 0..0x7F handling
+  { c1 = 0;
+    return ( ascii );
+  }
+  // get previous input
+  byte last = c1;   // get last char
+  c1 = ascii;       // remember actual character
+  switch (last)     // conversion depending on first UTF8-character
+  { case 0xC2: return  (ascii) - 34;  break;
+    case 0xC3: return  (ascii | 0xC0) - 34;  break;
+    case 0x82: if (ascii == 0xAC) return (0xEA);
+  }
+  return  (0);
+}
+
+String utf8ascii(String s) {
+  String r = "";
+  char c;
+  for (int i = 0; i < s.length(); i++)
+  {
+    c = utf8ascii(s.charAt(i));
+    if (c != 0) r += c;
+  }
+  return r;
+}
+
+void utf8ascii(char* s) {
+  int k = 0;
+  char c;
+  for (int i = 0; i < strlen(s); i++)
+  {
+    c = utf8ascii(s[i]);
+    if (c != 0)
+      s[k++] = c;
+  }
+  s[k] = 0;
 }

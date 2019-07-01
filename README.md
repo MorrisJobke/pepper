@@ -10,3 +10,17 @@
 ## Known limitations
 
 * MQTT messages have a limit of 128 bytes - https://github.com/knolleary/pubsubclient/#limitations
+
+## Sprites
+
+Sprites are generated via [Piskel](https://www.piskelapp.com) and then exported as C file.
+
+## API
+
+### Adjusting the text
+
+Sending a payload to the `MQTT_SUBSCRIBE_TOPIC` topic will update the text.
+
+### Adjusting the brightness
+
+Sending a payload with an integer to the `MQTT_SUBSCRIBE_TOPIC_BRIGHTNESS` topic will update the brightness.

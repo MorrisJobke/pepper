@@ -37,13 +37,21 @@ FastLED_NeoMatrix *matrix = new FastLED_NeoMatrix(
 
 void onConnectionEstablished() {
   client.subscribe(MQTT_SUBSCRIBE_TOPIC, [] (const String &payload)  {
-    Serial.print("Text: ");
+    int index = payload.indexOf(' ');
+    int logo_index = atoi(payload.substring(0, index).c_str());
+    const String text = payload.substring(index + 1);
+
+    Serial.print("Payload: ");
     Serial.println(payload);
+    Serial.print(" Logo: ");
+    Serial.print(logo_index);
+    Serial.print(" Text: ");
+    Serial.println(text);
 
     matrix->fillScreen(0);
     matrix->setCursor(9, 0);
-    matrix->print(payload);
-    drawLogo(0);
+    matrix->print(text);
+    drawLogo(logo_index);
 
     matrix->show();
   });
@@ -52,7 +60,6 @@ void onConnectionEstablished() {
     Serial.println(payload);
 
     matrix->setBrightness(atoi(payload.c_str()));
-    drawLogo(1);
     matrix->show();
   });
 }
@@ -80,8 +87,8 @@ void loop() {
 
 void drawLogo(unsigned int logo_index) {
   if (logo_index >= SPRITES_FRAME_COUNT) {
-    Serial.println("drawLogo: logo_index out of boundaries");
-    return;
+    Serial.println("drawLogo: logo_index out of boundaries - fallback to first logo");
+    logo_index = 0;
   }
   const unsigned int* logo = sprites_data[logo_index];
 

@@ -19,7 +19,13 @@ Sprites are generated via [Piskel](https://www.piskelapp.com) and then exported 
 
 ### Adjusting the text
 
-Sending a payload to the `MQTT_SUBSCRIBE_TOPIC` topic will update the text.
+Sending a payload to the `MQTT_SUBSCRIBE_TOPIC` topic will update the text. The payload consists of two parts. The first is the index of the sprite and the second one is the text to display. Both are separated by a space.
+
+The example below will use the logo at index `0` with the text `Sunny`.
+
+```
+0 Sunny
+```
 
 ### Adjusting the brightness
 

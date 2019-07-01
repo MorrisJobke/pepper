@@ -1,15 +1,13 @@
 #include "config.h"
 #include "sprites.c"
 
-// TODO does not work yet
-// #include "font.h"
-
 // https://github.com/plapointe6/EspMQTTClient
 #include "EspMQTTClient.h"
 #define FASTLED_ESP8266_RAW_PIN_ORDER
 #include <Adafruit_GFX.h>
 #include <FastLED.h>
 #include <FastLED_NeoMatrix.h>
+#include <Fonts/TomThumb.h>
 
 #define PIN 4
 #define TYPE NEOPIXEL // seems to be the same as WS2812B + RGB
@@ -43,13 +41,13 @@ void onConnectionEstablished() {
 
     Serial.print("Payload: ");
     Serial.println(payload);
-    Serial.print(" Logo: ");
+    Serial.print("Logo: ");
     Serial.print(logo_index);
     Serial.print(" Text: ");
     Serial.println(text);
 
     matrix->fillScreen(0);
-    matrix->setCursor(9, 0);
+    matrix->setCursor(9, 6);
     matrix->print(text);
     drawLogo(logo_index);
 
@@ -72,8 +70,7 @@ void setup() {
   matrix->begin();
   matrix->setBrightness(40);
   matrix->setTextWrap(false);
-  // TODO does not work yet
-  // matrix->setFont(&Dialog_plain_5);
+  matrix->setFont(&TomThumb);
   matrix->setTextColor(
     matrix->Color(255, 255, 255)
   );

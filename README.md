@@ -10,6 +10,7 @@
 ## Known limitations
 
 * MQTT messages have a limit of 128 bytes - https://github.com/knolleary/pubsubclient/#limitations
+* The font [`TomThumb`](https://robey.lag.net/2010/01/23/tiny-monospace-font.html) is quite limited in the default setting, thus it needs to be adjusted in the library folder. Open the file `Adafruit_GFX_Library/Fonts/TomThumb.h` and change `TOMTHUMB_USE_EXTENDED` to `1` and the `0x7F` in the last line of this file to `0xFF` or higher. For more details check out the [github thread](https://github.com/adafruit/Adafruit-GFX-Library/issues/144#issuecomment-429696689).
 
 ## Sprites
 
@@ -30,3 +31,9 @@ The example below will use the logo at index `0` with the text `Sunny`.
 ### Adjusting the brightness
 
 Sending a payload with an integer to the `MQTT_SUBSCRIBE_TOPIC_BRIGHTNESS` topic will update the brightness.
+
+## Related projects
+
+* [IoT Clock Display](https://imgur.com/gallery/VMxkOoG)
+* [AWTRIX 2.0](https://blueforcer.de/awtrix-2-0/)
+* [NRMetric](https://github.com/nygma2004/nrmetric)
